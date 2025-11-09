@@ -1,25 +1,39 @@
 #include "DC_motor.hpp"
 #include <Arduino.h>
 
-// Turn Motor 1 ON
-void motorOneOn() {
-    digitalWrite(MOTOR_ONE_EN, HIGH);
+
+void motorInit(){
+    pinMode(RIGHT_MOTOR, OUTPUT);
+    pinMode(LEFT_MOTOR, OUTPUT);
 }
 
-// Turn Motor 2 ON
-void motorTwoOn() {
-    digitalWrite(MOTOR_TWO_EN, HIGH);
+void turnLeft(){
+    digitalWrite(LEFT_MOTOR, LOW);
+    digitalWrite(RIGHT_MOTOR, HIGH);
 }
 
-// Turn both motors OFF
-void motorsOff() {
-    digitalWrite(MOTOR_ONE_EN, LOW);
-    digitalWrite(MOTOR_TWO_EN, LOW);
+void turnRight(){
+    digitalWrite(LEFT_MOTOR, HIGH);
+    digitalWrite(RIGHT_MOTOR, LOW);
 }
 
-// Optional: initialize pins
-void motorsInit() {
-    pinMode(MOTOR_ONE_EN, OUTPUT);
-    pinMode(MOTOR_TWO_EN, OUTPUT);
-    motorsOff();
+void forward(){
+    digitalWrite(LEFT_MOTOR, HIGH);
+    digitalWrite(RIGHT_MOTOR, HIGH);
+}
+
+void stop(){
+    digitalWrite(LEFT_MOTOR, LOW);
+    digitalWrite(RIGHT_MOTOR, LOW);
+}
+
+void motorTest(){
+    stop();
+    delay(2000);
+    forward();
+    delay(2000);
+    turnLeft();
+    delay(2000);
+    turnRight();
+    delay(2000);
 }

@@ -11,6 +11,6 @@
 // Function declarations
 void servoInit();
 void servoSetAngleOne(int angle);
-void servosOff();
+void returnToOrigin();
 
 #endif

@@ -22,9 +22,9 @@ void servoSetAngleOne(int angle) {
 
     servoOne.write(pwm);         // start moving
     delay(timeMs);               // wait approximate movement
-    servoOne.write(NEUTRAL_PWM); // stop
+    // servoOne.write(NEUTRAL_PWM); // stop
 }
 
-void servosOff() {
-    servoOne.detach();
+void returnToOrigin() {
+    servoOne.write(NEUTRAL_PWM);
 }

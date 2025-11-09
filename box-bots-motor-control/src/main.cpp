@@ -1,45 +1,37 @@
+#include <stdint.h>
 #include <Arduino.h>
 #include "DC_motor.hpp"
 #include "Servo_motor.hpp"
-
+#include "IRReceiver.hpp"
 
 void setup() {
     Serial.begin(115200);
+    irInit();
     motorsInit();
     servoInit();
-    motorOneOn();
-    motorTwoOn();
-    delay(10000);
-    motorsOff();
 }
 
 void loop() {
-    // if (Serial.available() > 0) {
-    //     int angle = Serial.parseInt();  // read the number you type
-    //     servoSetAngleOne(angle);      // move Servo 1
-    //     Serial.print("Servo 1 moved to ");
-    //     Serial.println(angle);
-    // }
+    // Serial.println(irAvailable());
+    if(irAvailable()){
+        uint32_t code = irGetRawData();
+        motorsOff();
 
-    // Serial.print("Servo 1 moved to ");
-    // Serial.println(angle)
-    // for(int i = 0; i < 180; i++){
-    //     servoSetAngleOne(i);
-    //     delay(10);
-    // }
-    // for(int i = 180; i > 0; i--){
-    //     servoSetAngleOne(i);
-    //     delay(10);
-    // }
-    //  motorOneOn();
-    // delay(1000);
-    
-    // motorsOff();
-    // delay(500);
-
-    // motorTwoOn();
-    // delay(1000);
-
-    // motorsOff();
-    // delay(500);
+        Serial.print("IR Code: 0x");
+        Serial.println(code, HEX);
+        if(code == 0xE718FF00){
+            Serial.println("Forward!!!!!!!");
+            motorOneOn();
+            motorTwoOn();
+        }
+        if(code == 0xF708FF00){
+            Serial.println("LEFT!!!!");
+            motorOneOn();
+        }
+         if(code == 0xA55AFF00){
+            Serial.println("RIGHT!!");
+            motorOneOn();
+        }
+        irResume();
+    }
 }
